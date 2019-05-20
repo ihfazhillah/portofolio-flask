@@ -209,4 +209,17 @@
 
 		}
 
+    $(document).ready(function(){
+        $.get('/articles',
+            {},
+            function(data, status){
+                var entries = $('.entries')
+                $.each(data, function(index, value){
+                    var text = `<div class='item'><h4><a targe='_blank' href='${value.link}'>${value.title}</a></h4></div>`
+                    entries.append(text)
+                })
+            }
+        )
+    })
+
 })(jQuery);

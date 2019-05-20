@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 import datetime
 import pytz # timezone 
 import requests
 import os
+import feedparser
 
 
 
@@ -12,6 +13,13 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def home_page():
 	return render_template('index.html')
+
+@app.route('/articles', methods=['GET'])
+def articles():
+    parsed = feedparser.parse('https://blog.ihfazh.com/feeds/all.atom.xml')
+    entries = parsed.get('entries')
+    return jsonify(entries)
+
 
 @app.route('/<name>')
 def profile(name):
