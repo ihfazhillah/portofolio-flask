@@ -35,3 +35,4 @@ psycopg2-binary>=2.6.2
 whitenoise==2.0.6
 
 feedparser==5.2.1
+git+https://github.com/ihfazhillah/qaamus2.git
