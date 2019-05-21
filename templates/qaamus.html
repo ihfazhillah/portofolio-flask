@@ -1,4 +1,48 @@
 {% extends 'index.html' %}
 
 {% block content %}
+<article class="panel">
+    <header>
+        <h2>Qaamus</h2>
+        <p>Indonesia - Arabic Translator from <a href="http://qaamus.com">Qaamus.com</a> </p>
+    </header>
+    <form id="qaamus" action="/api/qaamus">
+        <div class="row">
+            <div class="col-4">
+                <select name="method" id="method">
+                    <option value="munawwir">indonesia arab</option>
+                    <option value="pegon">Pegon</option>
+                    <option value="angka">Angka</option>
+                </select>
+            </div>
+            <div class="col-8">
+                <input id="" type="text" name="query" placeholder="Query">
+            </div>
+            <div class="col-12">
+                <input type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+
+    <div class="result">
+    </div>
+</article>
+{% endblock %}
+
+{%block custom_script %}
+<script>
+    $('#qaamus').submit(function(e){
+        e.preventDefault()
+
+        var url = $('#qaamus').attr('action')
+        $.get(url, $('#qaamus').serialize(), function(resp, code){
+            if(resp.error){
+                alert(resp.error)
+                return
+            }
+            var text = `<h4>Result for <b>${resp.indo}</b></h4><p>${resp.arab}</p><p><a href="${resp.url}">Source</a></p>`
+            $('.result').html(text)
+        })
+    })
+</script>
 {% endblock %}
