@@ -38,6 +38,8 @@ def qaamus():
         return jsonify(arab=hasil.arab, indo=hasil.indo, url=hasil.url)
     except ValueError as e:
         return jsonify(error=str(e))
+    except Exception as e:
+        return jsonify(error=str(e))
 
 
 @app.route('/qaamus')
