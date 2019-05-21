@@ -100,12 +100,21 @@
 											<div class="col-12">
 												<textarea name="message" placeholder="Message" rows="6"></textarea>
 											</div>
+                                            <input type="hidden" name="g-recaptcha-response" class='recaptcha'>
 											<div class="col-12">
 												<input type="submit" value="Send Message" />
 											</div>
 										</div>
 									</div>
 								</form>
+                                             <script src="https://www.google.com/recaptcha/api.js?render=6LfRmaQUAAAAAD1FOwazvGomquu9JJlizdGJPKEt"></script>
+  <script>
+  grecaptcha.ready(function() {
+      grecaptcha.execute('6LfRmaQUAAAAAD1FOwazvGomquu9JJlizdGJPKEt', {action: 'sendmessage'}).then(function(token) {
+          $('.recaptcha').val(token)
+      });
+  });
+  </script>
 							</article>
 
 							<article id="python" class="panel">

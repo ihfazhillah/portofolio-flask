@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, jsonify
 from flask_mail import Mail, Message
 import datetime
+import urllib
+import json
 import pytz # timezone 
 import requests
 import os
@@ -9,15 +11,16 @@ import feedparser
 
 
 app = Flask(__name__)
-mail_settings = {
+additional_settings = {
     "MAIL_SERVER": 'smtp.gmail.com',
     "MAIL_PORT": 465,
     "MAIL_USE_TLS": False,
     "MAIL_USE_SSL": True,
     "MAIL_USERNAME": os.environ.get('EMAIL_USER', 'theuser'),
-    "MAIL_PASSWORD": os.environ.get('EMAIL_PASSWORD', 'thepassword')
+    "MAIL_PASSWORD": os.environ.get('EMAIL_PASSWORD', 'thepassword'),
+    "RECAPTCHA_SECRET_KEY": os.environ.get('RECAPTCHA_SECRET_KEY'),
 }
-app.config.update(mail_settings)
+app.config.update(additional_settings)
 mail = Mail(app)
 
 
@@ -27,6 +30,21 @@ def script_mail():
     email = data.get('email')
     subject = data.get('subject')
     message = data.get('message')
+
+    # captcha validation
+    recaptcha_response = data.get('g-recaptcha-response')
+    values = {
+        'secret': app.config.get('RECAPTCHA_SECRET_KEY'),
+        'response': recaptcha_response
+    }
+    data = urllib.parse.urlencode(values).encode()
+    req = urllib.request.Request('https://www.google.com/recaptcha/api/siteverify', data=data)
+    response = urllib.request.urlopen(req)
+    result = json.loads(response.read().decode())
+    # end captcha validation
+
+    if not result.get('success'):
+        return render_template('email_sent.html', **{'success': False})
 
     text = f"""
 Email: {email}
@@ -49,7 +67,7 @@ from ihfazh.com
 
 @app.route('/', methods=['GET'])
 def home_page():
-    return render_template('index.html', {'index': True})
+    return render_template('index.html', **{'index': True})
 
 @app.route('/articles', methods=['GET'])
 def articles():
@@ -136,4 +154,4 @@ def blog_page():
 
 
 if __name__ == '__main__':
-	app.run(debug=False)
+	app.run(debug=True)

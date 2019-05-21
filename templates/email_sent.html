@@ -2,7 +2,11 @@
 {% block content %}
 <article id="home" class="panel intro">
 								<header>
+                                    {% if success %}
 									<h1>Email Sent</h1>
+                                    {% else %}
+                                    <h1>Please Try again later</h1>
+                                    {% endif %}
                                     <p>Wait a minute or click <a href='/'>here</a> to back</p>
                                 </header>
 
@@ -16,7 +20,7 @@
 <script charset="utf-8">
     $(document).ready(function(){
             setTimeout(function(){
-                window.location.href = 'https://ihfazh.com'
+                window.location.href = '/'
             }, 500)
         })
 </script>
