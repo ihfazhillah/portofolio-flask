@@ -26,7 +26,7 @@ app.config.update(additional_settings)
 mail = Mail(app)
 
 
-@app.route('/qaamus', methods=['GET', 'POST'])
+@app.route('/api/qaamus', methods=['GET', 'POST'])
 def qaamus():
     query = request.args.get('query', '')
     method = request.args.get('method', 'munawwir')
