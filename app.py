@@ -40,6 +40,11 @@ def qaamus():
         return jsonify(error=str(e))
 
 
+@app.route('/qaamus')
+def qaamus_frontend():
+    return render_template('qaamus.html')
+
+
 @app.route('/mail', methods=['POST'])
 def script_mail():
     data = request.form
