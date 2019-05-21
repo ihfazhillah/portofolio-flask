@@ -85,7 +85,7 @@ from ihfazh.com
             body=text
             )
     mail.send(msg)
-    return render_template('email_sent.html')
+    return render_template('email_sent.html', success=True)
 
 
 @app.route('/', methods=['GET'])
