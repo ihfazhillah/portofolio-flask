@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, jsonify
+from flask_mail import Mail, Message
 import datetime
 import pytz # timezone 
 import requests
@@ -8,6 +9,43 @@ import feedparser
 
 
 app = Flask(__name__)
+mail_settings = {
+    "MAIL_SERVER": 'smtp.gmail.com',
+    "MAIL_PORT": 465,
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": os.environ.get('EMAIL_USER', 'theuser'),
+    "MAIL_PASSWORD": os.environ.get('EMAIL_PASSWORD', 'thepassword')
+}
+app.config.update(mail_settings)
+mail = Mail(app)
+
+
+@app.route('/scripts/mail', methods=['POST'])
+def script_mail():
+    data = request.form
+    email = data.get('email')
+    subject = data.get('subject')
+    message = data.get('message')
+
+    text = f"""
+Email: {email}
+Subject: {subject}
+-------------------
+
+{message}
+-------------------
+from ihfazh.com
+    """
+    msg = Message(
+            subject='[ihfazh.com bot] Email Received',
+            sender=app.config.get('MAIL_USERNAME'),
+            recipients=['mihfazhillah@gmail.com'],
+            body=text
+            )
+    mail.send(msg)
+    # TODO: create a new page then redirect
+    return redirect('/')
 
 
 @app.route('/', methods=['GET'])
