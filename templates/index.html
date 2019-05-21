@@ -18,6 +18,7 @@
 			<div id="wrapper">
 
 				<!-- Nav -->
+                {% if index %}
 					<nav id="nav">
 						<a href="#" class="icon fa-home"><span>Home</span></a>
 						<a href="#work" class="icon fa-folder"><span>Work</span></a>
@@ -26,9 +27,11 @@
 						<a href="#python" class="icon fa-hashtag"><span>Scripts</span></a>
 						<a href="#contact" class="icon fa-envelope"><span>Contact</span></a>
 					</nav>
+                    {% endif %}
 
 				<!-- Main -->
 					<div id="main">
+                {% block content %}
 
 						<!-- Me -->
 							<article id="home" class="panel intro">
@@ -136,6 +139,7 @@
 							</article>
 
 					</div>
+                    {% endblock %}
 
 				<!-- Footer -->
 					<div id="footer">
@@ -154,6 +158,8 @@
 			<script src="static/assets/js/breakpoints.min.js"></script>
 			<script src="static/assets/js/util.js"></script>
 			<script src="static/assets/js/main.js"></script>
+
+            {%block custom_script%}{% endblock %}
 
 	</body>
 </html>

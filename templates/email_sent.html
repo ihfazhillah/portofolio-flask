@@ -1,0 +1,23 @@
+{% extends "index.html" %} 
+{% block content %}
+<article id="home" class="panel intro">
+								<header>
+									<h1>Email Sent</h1>
+                                    <p>Wait a minute or click <a href='/'>here</a> to back</p>
+                                </header>
+
+</article>
+
+
+
+{% endblock %}
+
+{%block custom_script%}
+<script charset="utf-8">
+    $(document).ready(function(){
+            setTimeout(function(){
+                window.location.href = 'https://ihfazh.com'
+            }, 500)
+        })
+</script>
+{% endblock %}

@@ -21,7 +21,7 @@ app.config.update(mail_settings)
 mail = Mail(app)
 
 
-@app.route('/scripts/mail', methods=['POST'])
+@app.route('/mail', methods=['POST'])
 def script_mail():
     data = request.form
     email = data.get('email')
@@ -44,13 +44,12 @@ from ihfazh.com
             body=text
             )
     mail.send(msg)
-    # TODO: create a new page then redirect
-    return redirect('/')
+    return render_template('email_sent.html')
 
 
 @app.route('/', methods=['GET'])
 def home_page():
-	return render_template('index.html')
+    return render_template('index.html', {'index': True})
 
 @app.route('/articles', methods=['GET'])
 def articles():
