@@ -215,7 +215,13 @@
             function(data, status){
                 var entries = $('.entries')
                 $.each(data, function(index, value){
-                    var text = `<div class='item'><h4><a targe='_blank' href='${value.link}'>${value.title}</a></h4></div>`
+                    var tags = value.tags
+                    var tags_text = '<ul class="tags">'
+                    $.each(tags, function(index, value){
+                        tags_text += `<li class='tag'>${value.term}</li>`
+                    })
+                    tags_text += '</ul>'
+                    var text = `<div class='item'><h4><a targe='_blank' href='${value.link}'>${value.title}</a></h4>${tags_text}</div>`
                     entries.append(text)
                 })
             }
