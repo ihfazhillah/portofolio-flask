@@ -7,6 +7,7 @@ import pytz # timezone
 import requests
 import os
 import feedparser
+from qaamus2 import Qaamus
 
 
 
@@ -20,8 +21,23 @@ additional_settings = {
     "MAIL_PASSWORD": os.environ.get('EMAIL_PASSWORD', 'thepassword'),
     "RECAPTCHA_SECRET_KEY": os.environ.get('RECAPTCHA_SECRET_KEY'),
 }
+app.config['JSON_AS_ASCII'] = False
 app.config.update(additional_settings)
 mail = Mail(app)
+
+
+@app.route('/qaamus', methods=['GET', 'POST'])
+def qaamus():
+    query = request.args.get('query', '')
+    method = request.args.get('method', 'munawwir')
+
+    instance = Qaamus(method)
+    try:
+        hasil = instance.terjemah(query).hasil()
+
+        return jsonify(arab=hasil.arab, indo=hasil.indo, url=hasil.url)
+    except ValueError as e:
+        return jsonify(error=str(e))
 
 
 @app.route('/mail', methods=['POST'])
