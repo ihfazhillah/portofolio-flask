@@ -60,12 +60,10 @@ def script_mail():
         'secret': app.config.get('RECAPTCHA_SECRET_KEY'),
         'response': recaptcha_response
     }
-    print(recaptcha_response)
     data = urllib.parse.urlencode(values).encode()
     req = urllib.request.Request('https://www.google.com/recaptcha/api/siteverify', data=data)
     response = urllib.request.urlopen(req)
     result = json.loads(response.read().decode())
-    print(result)
     # end captcha validation
 
     if not result.get('success'):
