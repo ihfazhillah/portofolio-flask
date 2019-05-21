@@ -83,7 +83,7 @@
 								<header>
 									<h2>Contact Me</h2>
 								</header>
-                                <form action="{{ url_for('script_mail') }}" method="post">
+                                <form id="email" action="{{ url_for('script_mail') }}" method="post">
 									<div>
 										<div class="row">
 											<div class="col-6 col-12-medium">
@@ -105,14 +105,6 @@
 										</div>
 									</div>
 								</form>
-                                             <script src="https://www.google.com/recaptcha/api.js?render=6LfRmaQUAAAAAD1FOwazvGomquu9JJlizdGJPKEt"></script>
-  <script>
-  grecaptcha.ready(function() {
-      grecaptcha.execute('6LfRmaQUAAAAAD1FOwazvGomquu9JJlizdGJPKEt', {action: 'sendmessage'}).then(function(token) {
-          $('.recaptcha').val(token)
-      });
-  });
-  </script>
 							</article>
 
 							<article id="python" class="panel">
@@ -174,6 +166,17 @@
 			<script src="static/assets/js/main.js"></script>
 
             {%block custom_script%}{% endblock %}
+                                             <script src="https://www.google.com/recaptcha/api.js?render=6LfRmaQUAAAAAD1FOwazvGomquu9JJlizdGJPKEt"></script>
+  <script>
+      $("#email").submit(function(e){
+          var form = this
+          e.preventDefault()
+          grecaptcha.execute('6LfRmaQUAAAAAD1FOwazvGomquu9JJlizdGJPKEt', {action: 'sendmessage'}).then(function(token) {
+              $('.recaptcha').val(token)
+              form.submit()
+          });
+      })
+  </script>
 
 	</body>
 </html>

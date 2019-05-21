@@ -7,7 +7,7 @@
                                     {% else %}
                                     <h1>Please Try again later</h1>
                                     {% endif %}
-                                    <p>Wait a minute or click <a href='/'>here</a> to back</p>
+                                    <p>Please wait or click <a href='/'>here</a> to back</p>
                                 </header>
 
 </article>
@@ -21,7 +21,7 @@
     $(document).ready(function(){
             setTimeout(function(){
                 window.location.href = '/'
-            }, 500)
+            }, 2000)
         })
 </script>
 {% endblock %}
